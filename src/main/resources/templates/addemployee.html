@@ -8,7 +8,7 @@
 </head>
 <body>
 <div th:replace="base :: navbar"></div>
-<form th:action="@{employeeAdded}" th:object="${employee}" method="post">
+<form th:action="@{${action}}" th:object="${employee}" method="post">
     <input type="hidden" th:field="*{id}">
     First Name: <input type="text" th:field="*{firstName}">
     <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span><br>
@@ -17,12 +17,12 @@
     Email: <input type="text" th:field="*{email}">
     <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span><br>
     Department:
-    <select th:field="*{department}">
+    <select th:field="*{departmentId}">
         <span th:each="department : ${departmentList}">
-            <option th:value="${department.getName()}" th:text="${department.getName()}"></option>
+            <option th:value="${department.id}" th:text="${department.name}"></option>
         </span>
     </select>
-    <span th:if="${#fields.hasErrors('department')}" th:errors="*{department}"></span><br>
+    <span th:if="${#fields.hasErrors('departmentId')}" th:errors="*{departmentId}"></span><br>
     <input type="submit" value="Submit">
 </form>
 

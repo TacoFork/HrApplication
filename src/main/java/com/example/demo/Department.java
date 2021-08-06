@@ -51,4 +51,12 @@ public class Department {
             }
         }
     }
+
+    public void removeEmployee(Employee employee){
+        for (int index = 0; index < this.employeeList.size(); index++){
+            if (this.employeeList.get(index).getId() == employee.getId()){
+                this.employeeList.remove(index);
+            }
+        }
+    }
 }

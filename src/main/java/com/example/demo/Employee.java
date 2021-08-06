@@ -29,18 +29,17 @@ public class Employee {
 
 //    @Column(name = "department")
     @NotNull
-    @NotEmpty
-    private String department;
+    private long departmentId;
 
     public Employee() {
     }
 
-    public Employee(@NotEmpty @NotNull String email, @NotEmpty @NotNull String firstName, @NotEmpty @NotNull String lastName, @NotNull @NotEmpty String department) {
+    public Employee(@NotEmpty @NotNull String email, @NotEmpty @NotNull String firstName, @NotEmpty @NotNull String lastName, @NotNull long departmentId) {
         this.id = id;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.department = department;
+        this.departmentId = departmentId;
     }
 
     public long getId() {
@@ -75,11 +74,11 @@ public class Employee {
         this.lastName = lastName;
     }
 
-    public String getDepartment() {
-        return department;
+    public long getDepartmentId() {
+        return departmentId;
     }
 
-    public void setDepartment(String department) {
-        this.department = department;
+    public void setDepartmentId(long departmentId) {
+        this.departmentId = departmentId;
     }
 }

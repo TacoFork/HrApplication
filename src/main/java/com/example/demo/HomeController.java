@@ -64,6 +64,7 @@ public class HomeController {
         employeeIdSetter(employee);
         model.addAttribute("employee", employee);
         model.addAttribute("departmentList", departmentList);
+        model.addAttribute("action", "/employeeAdded");
         return "addemployee";
     }
 
@@ -74,7 +75,7 @@ public class HomeController {
         }
         else{
             for (Department department : departmentList){
-                if (employee.getDepartment().equals(department.getName())){
+                if (employee.getDepartmentId() == department.getId()){
                     department.addEmployee(employee);
                     break;
                 }
@@ -115,16 +116,18 @@ public class HomeController {
 
     @PostMapping("/departmentUpdated")
     public String departmentUpdated(@Valid Department department, BindingResult Result){
-        for (int index = 0; index < departmentList.size(); index++){
-            if (department.getId() == departmentList.get(index).getId()){
-                departmentList.set(index, department);
+        for (Department department1 : departmentList){
+            if (department.getId() == department1.getId()){
+                department1.setName(department.getName());
             }
         }
         return "redirect:/departmentList";
     }
 
-    @GetMapping("/updateEmployees/{id}")
+    @GetMapping("/updateEmployee/{id}")
     public String updateEmployee(@PathVariable("id") long id, Model model){
+        model.addAttribute("departmentList", departmentList);
+        model.addAttribute("action", "/employeeUpdated");
         for(Department department : departmentList){
             for (Employee employee : department.getEmployeeList()){
                 if (employee.getId() == id){
@@ -143,9 +146,26 @@ public class HomeController {
         }
         else {
             for (Department department : departmentList){
-                if ()
+                for (Employee employee1 : department.getEmployeeList()) {
+                    if (employee1.getId() == employee.getId() || department.getId() == employee.getDepartmentId()) {
+//                if (department.getId() == employee.getDepartmentId()){
+                        department.updateEmployee(employee);
+                        return "redirect:/departmentList";
+                    }
+                    else if (employee1.getId() == employee.getId()){
+                        department.removeEmployee(employee);
+                        for (Department department2 : departmentList){
+                            if (department2.getId() == employee.getDepartmentId()){
+                                department2.addEmployee(employee1);
+                                break;
+                            }
+                        }
+                        return "redirect:/departmentList";
+                    }
+                }
             }
         }
+        return "redirect:/departmentList";
     }
 
     @RequestMapping("/login")

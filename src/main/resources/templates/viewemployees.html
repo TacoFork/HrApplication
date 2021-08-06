@@ -27,7 +27,7 @@
             <td th:text="${employee.lastName}"></td>
             <td th:text="${employee.email}"></td>
             <td sec:authorize="hasRole('ADMIN')">
-                <a th:href="${/updateEmployee/{id}(id=${employee.id})}">Update</a>
+                <a th:href="@{/updateEmployee/{id}(id=${employee.id})}">Update</a>
             </td>
         </tr>
         </tbody>
